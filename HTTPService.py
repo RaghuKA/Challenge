@@ -1,9 +1,10 @@
 from http.server import HTTPServer, BaseHTTPRequestHandler
 from urllib import parse
-import requests, os, json, sys
+import requests, os, json, sys, http
+import datetime
 
 # Class to define the HTTP endpoints
-class helloworld(BaseHTTPRequestHandler):    
+class HTTPServiceHandler(BaseHTTPRequestHandler):    
     # Method to check for camel-case in the url query string and to cut by spaces 
     def camel2token(self, str):
         return ''.join(' ' + c if c.isupper() else c for c in str)
@@ -19,6 +20,7 @@ class helloworld(BaseHTTPRequestHandler):
         get_requesturl = requests.get(query_url, headers=headers)
         # Parse the content of get_requesturl into a list
         getrequest_jsondata=json.loads(get_requesturl.content)
+        #print(getrequest_jsondata)
         # Get hash key and project name as a dictionary
         versionz_dict={getrequest_jsondata[0]['sha']:repo}
         return versionz_dict
@@ -62,8 +64,11 @@ class helloworld(BaseHTTPRequestHandler):
 
 def main():
     PORT = int(sys.argv[1]) if len(sys.argv) > 1 else 8080
-    server = HTTPServer(('', PORT), helloworld)
-    print('Server running on port %s' % PORT)
+    server = HTTPServer(('', PORT), HTTPServiceHandler)
+    print (f'Server running on port {PORT}')
+    print (f"Log")
+    print (f"---")
+    print (f"ISO date: {datetime.date.today().isoformat()} <--> HTTP status: {http.HTTPStatus.OK.value} <--> Request: {server.get_request}")
     server.serve_forever()
 
 if __name__ == '__main__':

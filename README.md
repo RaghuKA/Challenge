@@ -13,28 +13,37 @@ This challenge consists of developing a HTTP service for returning specified str
 ## Level 1
 
 ## Usage
-Running the command 'curl http://localhost:8080/helloworld' returns "Hello Stranger"
+
+Run the python HTTP service using the command in a terminal:
+
++ python HTTPService.py
+
+Then in another terminal, running the command 'curl http://localhost:8080/helloworld' returns "Hello Stranger"
 
 Running the command 'curl http://localhost:8080/helloworld?name=AlfredENeumann' returns "Hello
 Alfred E Neumann" (camel-case gets cut by spaces)
 
 Running the command 'curl http://localhost:8080/versionz' returns JSON with Git hash and name of the project.
+
 Note: To access the git hash, personal access token has to be provided. Personal access token will be provided upon request.
 
-## Task file
 
-This is a utility for running the service through zsh terminal
+## Make file
+
+This is a utility for running the service through terminal.
 
 Commands:
 
-To start the server first in zsh terminal:
+To start the server first in terminal:
 
-+ task run_Server
++ make run_server
 
-Then to access the endpoints in zsh terminal: 
-In the third argument, specify the endpoint required i.e. helloworld or 
+Then to access the endpoints in another terminal: 
+In the third argument, specify the endpoint required i.e. helloworld or helloworld?name= or versionz
 
-+ task run_HTTPService helloworld
++ make hw
++ make hw_name
++ make version
 
 ## API testing with postman
 
@@ -51,6 +60,12 @@ Run the following commands in the terminal to create the docker image and contai
 
 + docker build -t python-httpservice .
 + docker run python-httpservice
+
+Save the docker image
+
++ docker save image_name:latest | gzip > myhttpimage_latest.tar.gz
+
+
 
 
 

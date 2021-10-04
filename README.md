@@ -14,6 +14,10 @@ This challenge consists of developing a HTTP service for returning specified str
 
 ## Usage
 
+To install requests module, run the command in the terminal:
+
++ pip install requests
+
 Run the python HTTP service using the command in a terminal:
 
 + python HTTPService.py
